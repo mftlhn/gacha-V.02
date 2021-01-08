@@ -10,6 +10,7 @@ class Undian extends CI_Controller
         $data['namaundian'] = $this->db->get('undian_tbl')->result_array();
 
         $this->load->view('templates/header', $data);
+        $this->load->view('templates/navbar');
         $this->load->view('undian');
         $this->load->view('templates/footer');
     }
@@ -24,6 +25,7 @@ class Undian extends CI_Controller
 
         if ($this->form_validation->run() == false) {
             $this->load->view('templates/header', $data);
+            $this->load->view('templates/navbar');
             $this->load->view('newNama');
             $this->load->view('templates/footer');
         } else {
@@ -48,6 +50,7 @@ class Undian extends CI_Controller
 
         if ($this->form_validation->run() == false) {
             $this->load->view('templates/header', $data);
+            $this->load->view('templates/navbar');
             $this->load->view('undi', $data);
             $this->load->view('templates/footer');
         } else {
@@ -67,8 +70,36 @@ class Undian extends CI_Controller
         $data['hasil'] = $acak;
         $data['pemenang'] = $this->db->get_where('undian_tbl', ['nomor_undian' => $acak])->result_array();
 
+        $this->form_validation->set_rules('nama', 'Nama', 'required');
+        $this->form_validation->set_rules('nomor_undian', 'Nomor Undian', 'required');
+        $this->form_validation->set_rules('sesi', 'Sesi', 'required');
+
+        if ($this->form_validation->run() == false) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/navbar');
+            $this->load->view('hasil', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $data = [
+                'nama' => $this->input->post('nama'),
+                'nomor_undian' => $this->input->post('nomor_undian'),
+                'sesi' => $this->input->post('sesi'),
+                'create_date' => date('Y-m-d')
+            ];
+
+            $this->db->insert('pemenang', $data);
+            redirect('undian');
+        }
+    }
+
+    public function pemenang()
+    {
+        $data['title'] = 'Pemenang';
+        $data['pemenang'] = $this->db->query("SELECT id, nama, nomor_undian, sesi, DATE_FORMAT(create_date, '%d %M %Y') AS Tanggal FROM pemenang")->result_array();
+
         $this->load->view('templates/header', $data);
-        $this->load->view('hasil', $data);
+        $this->load->view('templates/navbar');
+        $this->load->view('pemenang', $data);
         $this->load->view('templates/footer');
     }
 }

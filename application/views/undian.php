@@ -12,6 +12,11 @@
             <?= $this->session->flashdata('message'); ?>
         </div>
     </div>
+    <div class="row mt-5 text-center">
+        <div class="col-lg-12">
+            <h1>Daftar Peserta Gacha PO PS5</h1>
+        </div>
+    </div>
     <div class="row mt-5">
         <div class="col-12">
             <table class="table table-bordered table-striped table-hover display">

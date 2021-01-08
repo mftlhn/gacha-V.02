@@ -7,24 +7,33 @@
             <a href="<?= base_url('undian/undi') ?>" class="btn btn-primary">Undi</a>
         </div>
     </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <?= $this->session->flashdata('message'); ?>
+        </div>
+    </div>
     <div class="row mt-5">
         <div class="col-12">
             <table class="table table-bordered table-striped table-hover display">
                 <thead>
                     <tr>
-                        <th>Nomor Undian</th>
+                        <th>Nomor</th>
                         <th>Nama</th>
+                        <th>Sesi</th>
+                        <th>Nomor Undian</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Joko</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Suparno</td>
-                    </tr>
+                    <?php $i = 1 ?>
+                    <?php foreach ($namaundian as $nama) : ?>
+                        <tr>
+                            <td><?= $i ?></td>
+                            <td><?= $nama['nama'] ?></td>
+                            <td><?= $nama['sesi'] ?></td>
+                            <td><?= $nama['nomor_undian'] ?></td>
+                        </tr>
+                        <?php $i++ ?>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
